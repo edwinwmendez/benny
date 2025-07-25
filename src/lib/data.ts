@@ -15,6 +15,12 @@ import {
   Instagram,
   Facebook,
   PhoneIcon as WhatsApp,
+  Building2,
+  Palette,
+  Volume2,
+  Video,
+  ChefHat,
+  PartyPopper as Entertainment,
 } from "lucide-react"
 import type { GalleryItem, Service, Feature, Testimonial, ContactInfo } from "./types"
 
@@ -339,7 +345,179 @@ export const services: Service[] = [
   },
 ]
 
-// Características y servicios adicionales
+// Servicios detallados por categorías
+export const detailedServices = {
+  infraestructura: {
+    title: "🏰 Infraestructura Mágica",
+    subtitle: "Espacio libre de 9m de altura decorado con pista de porcelanato, jardín natural y zonas selfie",
+    icon: Building2,
+    color: "from-pink-500 to-rose-600",
+    services: [
+      {
+        icon: "✨",
+        title: "Ambiente completamente climatizado",
+        description: "Control de temperatura para el confort de todos los invitados"
+      },
+      {
+        icon: "🌿",
+        title: "Jardín con ventilación natural",
+        description: "Espacios abiertos con vegetación natural para fotos al aire libre"
+      },
+      {
+        icon: "🛋️",
+        title: "Mobiliario lounge premium",
+        description: "Muebles elegantes y cómodos para el descanso de los invitados"
+      },
+      {
+        icon: "📸",
+        title: "Zonas fotográficas especializadas",
+        description: "Espacios diseñados específicamente para sesiones fotográficas"
+      }
+    ]
+  },
+  decoracion: {
+    title: "🌟 Decoración Deslumbrante",
+    subtitle: "Mesas vestidas con telas brocadas, sillas Tiffany doradas y decoración LED",
+    icon: Palette,
+    color: "from-purple-500 to-violet-600",
+    services: [
+      {
+        icon: "🎨",
+        title: "Telas brocadas temáticas",
+        description: "Telas de alta calidad con diseños exclusivos según la temática del evento"
+      },
+      {
+        icon: "✨",
+        title: "Accesorios dorados exclusivos",
+        description: "Detalles dorados que añaden elegancia y sofisticación"
+      },
+      {
+        icon: "💡",
+        title: "Iluminación LED especializada",
+        description: "Sistema de luces LED programables para crear ambientes únicos"
+      },
+      {
+        icon: "🎪",
+        title: "Decoración principal personalizada",
+        description: "Arreglos centrales diseñados según los gustos del cliente"
+      }
+    ]
+  },
+  sonido: {
+    title: "🎵 Sonido & Efectos Espectaculares",
+    subtitle: "Sistema de audio de alta potencia, DJ profesional, luces inteligentes y efectos",
+    icon: Volume2,
+    color: "from-blue-500 to-cyan-600",
+    services: [
+      {
+        icon: "🔊",
+        title: "Equipos de sonido premium",
+        description: "Sistema de audio de alta fidelidad para una experiencia sonora perfecta"
+      },
+      {
+        icon: "🎧",
+        title: "DJ con música actualizada",
+        description: "DJ profesional con amplio repertorio musical y música actual"
+      },
+      {
+        icon: "💡",
+        title: "Luces móviles y láser RGB",
+        description: "Efectos de iluminación dinámica con colores vibrantes"
+      },
+      {
+        icon: "💨",
+        title: "Efectos de humo y chisperos",
+        description: "Efectos especiales para momentos climáticos del evento"
+      }
+    ]
+  },
+  fotografia: {
+    title: "📸 Fotografía & Video Cinematográfico",
+    subtitle: "Filmación cinematográfica, sesiones exteriores y cuadro de firmas",
+    icon: Video,
+    color: "from-green-500 to-emerald-600",
+    services: [
+      {
+        icon: "🎬",
+        title: "Criterio cinematográfico",
+        description: "Producción audiovisual con técnicas cinematográficas profesionales"
+      },
+      {
+        icon: "🏞️",
+        title: "Sesiones en locaciones abiertas",
+        description: "Fotografías en espacios exteriores con paisajes naturales"
+      },
+      {
+        icon: "🖼️",
+        title: "Trabajo final: Cuadro de firmas",
+        description: "Cuadro personalizado donde los invitados dejan sus mensajes"
+      },
+      {
+        icon: "✨",
+        title: "Tomas espontáneas de calidad",
+        description: "Captura de momentos únicos y naturales durante el evento"
+      }
+    ]
+  },
+  banquete: {
+    title: "🍰 Banquete Delicioso",
+    subtitle: "Buffet completo con aperitivos, cena gourmet, torta personalizada y bebidas",
+    icon: ChefHat,
+    color: "from-orange-500 to-red-600",
+    services: [
+      {
+        icon: "🥂",
+        title: "Champagne helado en cristal",
+        description: "Brindis con champagne servido en copas de cristal"
+      },
+      {
+        icon: "🍸",
+        title: "Aperitivos y digestivos selectos",
+        description: "Variedad de bocaditos y bebidas para acompañar"
+      },
+      {
+        icon: "🍴",
+        title: "Cena con múltiples opciones",
+        description: "Buffet completo con opciones para todos los gustos"
+      },
+      {
+        icon: "🎂",
+        title: "Torta en masa elástica personalizada",
+        description: "Torta diseñada según la temática y gustos del evento"
+      }
+    ]
+  },
+  entretenimiento: {
+    title: "🎉 Entretenimiento Espectacular",
+    subtitle: "Hora loca con personajes, juegos interactivos, seguridad profesional y anfitrionaje",
+    icon: Entertainment,
+    color: "from-yellow-500 to-orange-600",
+    services: [
+      {
+        icon: "🎭",
+        title: "Personajes de TV y cine",
+        description: "Animadores caracterizados como personajes favoritos"
+      },
+      {
+        icon: "🎲",
+        title: "Juegos y animación",
+        description: "Actividades interactivas para mantener entretenidos a los invitados"
+      },
+      {
+        icon: "👮",
+        title: "Personal de seguridad",
+        description: "Equipo de seguridad profesional para garantizar tranquilidad"
+      },
+      {
+        icon: "🎆",
+        title: "Anfitrionaje especializado",
+        description: "Maestro de ceremonias para coordinar y dirigir el evento"
+      }
+    ]
+  }
+}
+
+// Características y servicios adicionales (mantener para compatibilidad)
 export const features: Feature[] = [
   {
     icon: MapPin,
