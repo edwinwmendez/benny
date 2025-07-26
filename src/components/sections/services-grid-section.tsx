@@ -315,7 +315,7 @@ export default function ServicesGridSection() {
                 {getCarouselServices().map((service) => (
                   <div key={service.id} className="w-full md:w-1/3 flex-shrink-0 px-4">
                     <Card 
-                      className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white h-full"
+                      className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white h-full flex flex-col"
                     >
                       <div className="relative h-64 overflow-hidden">
                         <Image
@@ -338,53 +338,48 @@ export default function ServicesGridSection() {
                         </div>
                       </div>
                       
-                      <CardHeader className="pb-4">
-                        <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
+                      <CardHeader className="pb-4 flex-shrink-0">
+                        <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors min-h-[3.5rem] flex items-center">
                           {service.title}
                         </CardTitle>
-                        <CardDescription className="text-gray-600">
+                        <CardDescription className="text-gray-600 min-h-[3rem] flex items-start">
                           {service.description}
                         </CardDescription>
                       </CardHeader>
                       
-                      <CardContent className="pt-0">
-                        <div className="space-y-3">
+                      <CardContent className="pt-0 flex-grow flex flex-col">
+                        <div className="space-y-4 flex-grow">
                           <div className="flex justify-between items-center">
                             <span className="text-2xl font-bold text-purple-600">{service.price}</span>
-                            <span className="text-sm text-gray-500">{service.duration}</span>
+                            <div className="text-right">
+                              <div className="text-xs text-gray-500 uppercase tracking-wide">Duración</div>
+                              <div className="text-sm font-medium text-gray-700">{service.duration}</div>
+                            </div>
                           </div>
                           
-                          <div className="space-y-2">
-                            <div className="flex items-center text-sm text-gray-600">
-                              <Users className="h-4 w-4 mr-2 text-purple-500" />
-                              {service.capacity}
+                          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 space-y-2">
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center text-gray-600">
+                                <Users className="h-4 w-4 mr-2 text-purple-500" />
+                                <span className="font-medium">Capacidad:</span>
+                              </div>
+                              <span className="text-purple-600 font-semibold">{service.capacity}</span>
                             </div>
-                            <div className="flex items-center text-sm text-gray-600">
-                              <Clock className="h-4 w-4 mr-2 text-purple-500" />
-                              {service.duration}
+                            <div className="flex items-center justify-center">
+                              <div className="text-xs text-purple-600 bg-white px-3 py-1 rounded-full font-medium">
+                                ✨ {service.features.length} servicios incluidos
+                              </div>
                             </div>
                           </div>
-
-                          <div className="space-y-2">
-                            <h4 className="font-semibold text-gray-800 text-sm">✨ Incluye:</h4>
-                            <ul className="space-y-1">
-                              {service.features.slice(0, 3).map((feature, idx) => (
-                                <li key={idx} className="flex items-center text-xs text-gray-600">
-                                  <div className="w-1.5 h-1.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-2 flex-shrink-0"></div>
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <Button
-                            onClick={() => setSelectedService(service)}
-                            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-                          >
-                            <ArrowRight className="mr-2 h-4 w-4" />
-                            Ver Detalles
-                          </Button>
                         </div>
+
+                        <Button
+                          onClick={() => setSelectedService(service)}
+                          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all mt-4"
+                        >
+                          <ArrowRight className="mr-2 h-4 w-4" />
+                          Ver Detalles Completos
+                        </Button>
                       </CardContent>
                     </Card>
                   </div>
@@ -457,7 +452,7 @@ export default function ServicesGridSection() {
               {filteredServices.map((service) => (
                 <Card 
                   key={service.id}
-                  className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white"
+                  className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white h-full flex flex-col"
                 >
                   <div className="relative h-64 overflow-hidden">
                     <Image
@@ -480,53 +475,48 @@ export default function ServicesGridSection() {
                     </div>
                   </div>
                   
-                  <CardHeader className="pb-4">
-                    <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
+                  <CardHeader className="pb-4 flex-shrink-0">
+                    <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors min-h-[3.5rem] flex items-center">
                       {service.title}
                     </CardTitle>
-                    <CardDescription className="text-gray-600">
+                    <CardDescription className="text-gray-600 min-h-[3rem] flex items-start">
                       {service.description}
                     </CardDescription>
                   </CardHeader>
                   
-                  <CardContent className="pt-0">
-                    <div className="space-y-3">
+                  <CardContent className="pt-0 flex-grow flex flex-col">
+                    <div className="space-y-4 flex-grow">
                       <div className="flex justify-between items-center">
                         <span className="text-2xl font-bold text-purple-600">{service.price}</span>
-                        <span className="text-sm text-gray-500">{service.duration}</span>
+                        <div className="text-right">
+                          <div className="text-xs text-gray-500 uppercase tracking-wide">Duración</div>
+                          <div className="text-sm font-medium text-gray-700">{service.duration}</div>
+                        </div>
                       </div>
                       
-                      <div className="space-y-2">
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Users className="h-4 w-4 mr-2 text-purple-500" />
-                          {service.capacity}
+                      <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center text-gray-600">
+                            <Users className="h-4 w-4 mr-2 text-purple-500" />
+                            <span className="font-medium">Capacidad:</span>
+                          </div>
+                          <span className="text-purple-600 font-semibold">{service.capacity}</span>
                         </div>
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Clock className="h-4 w-4 mr-2 text-purple-500" />
-                          {service.duration}
+                        <div className="flex items-center justify-center">
+                          <div className="text-xs text-purple-600 bg-white px-3 py-1 rounded-full font-medium">
+                            ✨ {service.features.length} servicios incluidos
+                          </div>
                         </div>
                       </div>
-
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-gray-800 text-sm">✨ Incluye:</h4>
-                        <ul className="space-y-1">
-                          {service.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center text-xs text-gray-600">
-                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-2 flex-shrink-0"></div>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <Button
-                        onClick={() => setSelectedService(service)}
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-                      >
-                        <ArrowRight className="mr-2 h-4 w-4" />
-                        Ver Detalles
-                      </Button>
                     </div>
+
+                    <Button
+                      onClick={() => setSelectedService(service)}
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all mt-4"
+                    >
+                      <ArrowRight className="mr-2 h-4 w-4" />
+                      Ver Detalles Completos
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
