@@ -95,36 +95,42 @@ export default function ContactSection() {
           </p>
         </div>
 
-        {/* Grid de métodos de contacto */}
-        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-16">
-          {contactMethods.map((method, index) => (
-            <Card 
-              key={index}
-              className={`${method.bgColor} border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer group`}
-              onClick={method.action}
-            >
-              <CardContent className="p-3 md:p-6 text-center">
-                <div className="relative mb-2 md:mb-4">
-                  <div className={`inline-flex p-2 md:p-4 rounded-xl md:rounded-2xl bg-gradient-to-r ${method.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <method.icon className="h-5 w-5 md:h-8 md:w-8 text-white" />
-                  </div>
-                  <Badge className={`absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-gradient-to-r ${method.color} text-white text-xs`}>
-                    {method.badge}
-                  </Badge>
-                </div>
-                <h3 className="font-bold text-sm md:text-lg text-gray-800 mb-1">{method.title}</h3>
-                <p className="text-xs md:text-sm font-medium text-gray-600 mb-1 md:mb-2">{method.subtitle}</p>
-                <p className="text-xs text-gray-500 hidden md:block">{method.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
         {/* Contenido principal */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           
           {/* Sidebar informativo - Lado izquierdo */}
           <div className="space-y-6">
+            {/* Métodos de contacto compactos */}
+            <Card className="bg-white border-0 shadow-lg">
+              <CardContent className="p-4">
+                <h4 className="font-bold text-gray-800 mb-3 text-center">Métodos de Contacto</h4>
+                <div className="space-y-3">
+                  {contactMethods.map((method, index) => (
+                    <div 
+                      key={index}
+                      className={`${method.bgColor} rounded-lg p-3 cursor-pointer group transition-all duration-300 hover:scale-105`}
+                      onClick={method.action}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`p-2 rounded-lg bg-gradient-to-r ${method.color} shadow-sm`}>
+                          <method.icon className="h-4 w-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <h5 className="font-semibold text-sm text-gray-800">{method.title}</h5>
+                            <Badge className={`bg-gradient-to-r ${method.color} text-white text-xs px-1 py-0.5`}>
+                              {method.badge}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-gray-600 truncate">{method.subtitle}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Horarios */}
             <Card className="bg-gradient-to-br from-yellow-50 to-orange-100 border-0 shadow-lg">
               <CardContent className="p-6">
@@ -145,34 +151,6 @@ export default function ContactSection() {
                     <span>Domingos:</span>
                     <span className="font-medium">10:00 AM - 4:00 PM</span>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Redes sociales */}
-            <Card className="bg-gradient-to-br from-pink-50 to-purple-100 border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <Star className="h-6 w-6 text-purple-500 mr-2" />
-                  <h4 className="font-bold text-gray-800">Síguenos</h4>
-                </div>
-                <div className="space-y-3">
-                  <Button
-                    onClick={() => window.open(SITE_CONFIG.links.instagram, '_blank')}
-                    variant="outline"
-                    className="w-full border-2 border-pink-200 text-pink-600 hover:bg-pink-50"
-                  >
-                    <Instagram className="mr-2 h-4 w-4" />
-                    Instagram
-                  </Button>
-                  <Button
-                    onClick={() => window.open(SITE_CONFIG.links.facebook, '_blank')}
-                    variant="outline"
-                    className="w-full border-2 border-blue-200 text-blue-600 hover:bg-blue-50"
-                  >
-                    <Facebook className="mr-2 h-4 w-4" />
-                    Facebook
-                  </Button>
                 </div>
               </CardContent>
             </Card>
