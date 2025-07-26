@@ -264,28 +264,27 @@ export default function ServicesGridSection() {
   const totalSlides = Math.ceil(filteredServices.length / 3)
 
   return (
-    <section id="servicios-grid" className="py-20 bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <section id="servicios-grid" className="py-12 bg-gradient-to-br from-purple-50 via-white to-pink-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <Badge className="bg-gradient-to-r from-purple-500 to-pink-600 text-white border-0 mb-6 text-lg px-6 py-2">
+        <div className="text-center mb-8">
+          <Badge className="bg-gradient-to-r from-purple-500 to-pink-600 text-white border-0 mb-3 text-sm px-4 py-1">
             ⭐ Servicios Especializados
           </Badge>
-          <h2 className="text-5xl md:text-6xl font-bold mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Servicios que
             </span>
-            <br />
             <span className="bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-              Enamoran 💜
+              {" "}Enamoran 💜
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubre nuestros paquetes especializados, diseñados para hacer de tu evento una experiencia única e inolvidable
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            Descubre nuestros paquetes especializados para eventos únicos e inolvidables
           </p>
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {FILTER_OPTIONS.map((option) => (
             <Button
               key={option.key}
@@ -298,7 +297,7 @@ export default function ServicesGridSection() {
                 activeFilter === option.key
                   ? `bg-gradient-to-r ${option.color} text-white`
                   : "bg-white text-gray-700 hover:bg-purple-50"
-              } border-2 border-purple-200 transition-all transform hover:scale-105`}
+              } border-2 border-purple-200 transition-all transform hover:scale-105 text-sm px-4 py-2`}
             >
               {option.label}
             </Button>
@@ -392,38 +391,35 @@ export default function ServicesGridSection() {
               </div>
             </div>
 
-            {/* Navigation Arrows */}
+            {/* Navegación del carrusel */}
             {totalSlides > 1 && (
-              <>
+              <div className="flex justify-center items-center mt-8 space-x-4">
                 <Button
                   onClick={prevSlide}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 shadow-lg rounded-full p-2 z-10"
+                  className="bg-white/80 backdrop-blur-sm hover:bg-white text-gray-800 p-2 rounded-full shadow-lg"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-5 w-5" />
                 </Button>
+                
+                {/* Dots de navegación */}
+                <div className="flex space-x-2">
+                  {Array.from({ length: totalSlides }, (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-colors ${
+                        currentSlide === index ? 'bg-pink-500' : 'bg-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+
                 <Button
                   onClick={nextSlide}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 shadow-lg rounded-full p-2 z-10"
+                  className="bg-white/80 backdrop-blur-sm hover:bg-white text-gray-800 p-2 rounded-full shadow-lg"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-5 w-5" />
                 </Button>
-              </>
-            )}
-
-            {/* Dots Navigation */}
-            {totalSlides > 1 && (
-              <div className="flex justify-center mt-6 space-x-2">
-                {Array.from({ length: totalSlides }, (_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      currentSlide === index
-                        ? 'bg-gradient-to-r from-purple-600 to-pink-600'
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                  />
-                ))}
               </div>
             )}
 
@@ -607,20 +603,6 @@ export default function ServicesGridSection() {
             </div>
           </div>
         )}
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-8 shadow-xl">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">¿No Encuentras lo que Buscas? 🤔</h3>
-            <p className="text-xl text-gray-600 mb-6">
-              ¡Creamos paquetes personalizados para hacer realidad tu evento soñado!
-            </p>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white text-lg px-8 py-4 shadow-lg transform hover:scale-105 transition-all">
-              <Star className="mr-2 h-5 w-5" />
-              💜 ¡Crear Paquete Personalizado!
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   )

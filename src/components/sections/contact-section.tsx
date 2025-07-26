@@ -57,16 +57,6 @@ export default function ContactSection() {
       badge: "Directo"
     },
     {
-      icon: Mail,
-      title: "Email",
-      subtitle: "Consulta detallada",
-      description: "Envía tu solicitud completa",
-      color: "from-purple-500 to-violet-600",
-      bgColor: "bg-purple-50",
-      action: () => window.open(SITE_CONFIG.links.email, '_self'),
-      badge: "Completo"
-    },
-    {
       icon: MapPin,
       title: "Visítanos",
       subtitle: "Av. El Sol 527, S.J.L",
@@ -79,7 +69,7 @@ export default function ContactSection() {
   ]
 
   return (
-    <section id="contacto" className="py-20 bg-gradient-to-br from-purple-100 via-pink-50 to-yellow-50 relative overflow-hidden">
+    <section id="contacto" className="py-12 bg-gradient-to-br from-purple-100 via-pink-50 to-yellow-50 relative overflow-hidden">
       {/* Decoraciones de fondo */}
       <div className="absolute top-10 left-10 text-6xl opacity-5 animate-pulse">💬</div>
       <div className="absolute top-20 right-20 text-8xl opacity-5 animate-bounce">📞</div>
@@ -88,44 +78,43 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
-          <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white mb-6 px-6 py-2">
+        <div className="text-center mb-8">
+          <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white mb-3 px-4 py-1 text-sm">
             ¡Hablemos de tu Celebración!
           </Badge>
-          <h2 className="text-5xl md:text-6xl font-bold mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               ¡Conectemos
             </span>
-            <br />
             <span className="bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-              y Celebremos! 🎉
+              {" "}y Celebremos! 🎉
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Múltiples formas de contactarnos para hacer realidad tu evento soñado
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            Estamos aquí para hacer de tu evento algo extraordinario. ¡Contáctanos ahora!
           </p>
         </div>
 
         {/* Grid de métodos de contacto */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-16">
           {contactMethods.map((method, index) => (
             <Card 
               key={index}
               className={`${method.bgColor} border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer group`}
               onClick={method.action}
             >
-              <CardContent className="p-6 text-center">
-                <div className="relative mb-4">
-                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${method.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <method.icon className="h-8 w-8 text-white" />
+              <CardContent className="p-3 md:p-6 text-center">
+                <div className="relative mb-2 md:mb-4">
+                  <div className={`inline-flex p-2 md:p-4 rounded-xl md:rounded-2xl bg-gradient-to-r ${method.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <method.icon className="h-5 w-5 md:h-8 md:w-8 text-white" />
                   </div>
-                  <Badge className={`absolute -top-2 -right-2 bg-gradient-to-r ${method.color} text-white text-xs`}>
+                  <Badge className={`absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-gradient-to-r ${method.color} text-white text-xs`}>
                     {method.badge}
                   </Badge>
                 </div>
-                <h3 className="font-bold text-lg text-gray-800 mb-1">{method.title}</h3>
-                <p className="text-sm font-medium text-gray-600 mb-2">{method.subtitle}</p>
-                <p className="text-xs text-gray-500">{method.description}</p>
+                <h3 className="font-bold text-sm md:text-lg text-gray-800 mb-1">{method.title}</h3>
+                <p className="text-xs md:text-sm font-medium text-gray-600 mb-1 md:mb-2">{method.subtitle}</p>
+                <p className="text-xs text-gray-500 hidden md:block">{method.description}</p>
               </CardContent>
             </Card>
           ))}
