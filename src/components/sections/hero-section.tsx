@@ -55,7 +55,7 @@ export default function HeroSection() {
         </div>
 
         {/* Botones Principales - Centrados y más grandes */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center">
           <Button
             size="lg"
             className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xl px-10 py-6 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all"
@@ -69,9 +69,11 @@ export default function HeroSection() {
             <Phone className="mr-3 h-6 w-6" />📞 Llamar Ahora
           </Button>
         </div>
+      </div>
 
-        {/* Stats Section - Móviles: debajo de botones, Desktop: posición absoluta */}
-        <div className="block md:hidden">
+      {/* Stats Section - Móvil: En el pie del hero */}
+      <div className="block md:hidden absolute bottom-8 left-0 right-0 z-20">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-3">
             {companyInfo.stats.map((stat, index) => (
               <div key={index} className={`bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg border flex-shrink-0 ${stat.bgColor}`}>

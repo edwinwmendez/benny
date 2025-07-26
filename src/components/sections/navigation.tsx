@@ -121,7 +121,7 @@ export default function Navigation() {
                       >
                         {serviceLinks.map((serviceLink) => (
                           <button
-                            key={serviceLink.href}
+                            key={`${serviceLink.href}-${serviceLink.filterType}`}
                             onClick={() => handleServiceNavigation(serviceLink.href, serviceLink.filterType)}
                             className="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
                           >
@@ -146,7 +146,7 @@ export default function Navigation() {
               )
             })}
             <Button 
-              onClick={() => smoothScroll('#contacto')}
+              onClick={() => window.open(`${SITE_CONFIG.links.whatsapp}?text=${encodeURIComponent('¡Hola! 🎉 Me gustaría cotizar un evento con Producciones Benny. ¿Podrían ayudarme con información y precios?')}`, '_blank')}
               className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
             >
               <PartyPopper className="mr-2 h-4 w-4" />
@@ -173,7 +173,7 @@ export default function Navigation() {
                     </div>
                     {serviceLinks.map((serviceLink) => (
                       <button
-                        key={serviceLink.href}
+                        key={`mobile-${serviceLink.href}-${serviceLink.filterType}`}
                         onClick={() => handleServiceNavigation(serviceLink.href, serviceLink.filterType)}
                         className="w-full flex items-center px-4 py-2 text-gray-700 hover:text-pink-600 font-medium"
                       >
@@ -196,7 +196,10 @@ export default function Navigation() {
               )
             })}
             <Button 
-              onClick={() => smoothScroll('#contacto')}
+              onClick={() => {
+                window.open(`${SITE_CONFIG.links.whatsapp}?text=${encodeURIComponent('¡Hola! 🎉 Me gustaría cotizar un evento con Producciones Benny. ¿Podrían ayudarme con información y precios?')}`, '_blank')
+                setIsMenuOpen(false)
+              }}
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white"
             >
               <PartyPopper className="mr-2 h-4 w-4" />
