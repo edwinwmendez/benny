@@ -28,15 +28,12 @@ export default function Navigation() {
   }
 
   const handleServiceNavigation = (targetId: string, filterType?: string) => {
-    console.log('Navegando a:', targetId, 'con filtro:', filterType) // Debug
-    
     // Navegar a la sección
     smoothScroll(targetId)
     
     // Si hay un filtro específico, activarlo después de un pequeño delay
     if (filterType) {
       setTimeout(() => {
-        console.log('Disparando evento para filtro:', filterType) // Debug
         // Disparar un evento personalizado para activar el filtro
         window.dispatchEvent(new CustomEvent('activateServiceFilter', {
           detail: { filterType }

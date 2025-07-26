@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Star, Users, Clock, CheckCircle, X, ArrowRight, Building2, Palette, Volume2, Video, ChefHat, PartyPopper } from "lucide-react"
+import { Star, Users, Clock, CheckCircle, X, ArrowRight, Building2, Palette, Volume2, Video, ChefHat, PartyPopper, ChevronLeft, ChevronRight, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -214,15 +214,16 @@ const FILTER_OPTIONS = [
 export default function ServicesGridSection() {
   const [activeFilter, setActiveFilter] = useState<ServiceType>("principales")
   const [selectedService, setSelectedService] = useState<Service | null>(null)
+  const [showAllServices, setShowAllServices] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   // Escuchar eventos de activación de filtros desde la navegación
   useEffect(() => {
     const handleFilterActivation = (event: CustomEvent) => {
-      console.log('Evento recibido:', event.detail) // Debug
       const { filterType } = event.detail
       if (filterType === "principales" || filterType === "adicionales") {
-        console.log('Activando filtro:', filterType) // Debug
         setActiveFilter(filterType as ServiceType)
+        setShowAllServices(true) // Mostrar todos los servicios cuando se navega desde el menú
       }
     }
 
@@ -236,6 +237,31 @@ export default function ServicesGridSection() {
   }, [])
 
   const filteredServices = allServices.filter((service) => service.type === activeFilter)
+
+  // Funciones del carrusel
+  const nextSlide = () => {
+    setCurrentSlide((prev) => 
+      prev === Math.ceil(filteredServices.length / 3) - 1 ? 0 : prev + 1
+    )
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => 
+      prev === 0 ? Math.ceil(filteredServices.length / 3) - 1 : prev - 1
+    )
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
+
+  // Obtener servicios para el carrusel (3 por slide)
+  const getCarouselServices = () => {
+    const startIndex = currentSlide * 3
+    return filteredServices.slice(startIndex, startIndex + 3)
+  }
+
+  const totalSlides = Math.ceil(filteredServices.length / 3)
 
   return (
     <section id="servicios-grid" className="py-20 bg-gradient-to-br from-purple-50 via-white to-pink-50">
@@ -263,7 +289,11 @@ export default function ServicesGridSection() {
           {FILTER_OPTIONS.map((option) => (
             <Button
               key={option.key}
-              onClick={() => setActiveFilter(option.key as ServiceType)}
+              onClick={() => {
+                setActiveFilter(option.key as ServiceType)
+                setCurrentSlide(0) // Resetear al primer slide
+                setShowAllServices(false) // Volver al modo carrusel
+              }}
               className={`${
                 activeFilter === option.key
                   ? `bg-gradient-to-r ${option.color} text-white`
@@ -275,73 +305,237 @@ export default function ServicesGridSection() {
           ))}
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredServices.map((service) => (
-            <Card 
-              key={service.id}
-              className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white"
-            >
-              <div className="relative h-64 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
-                      <service.icon className="h-5 w-5 text-white" />
+        {/* Services Display - Carrusel or Grid */}
+        {!showAllServices ? (
+          // Modo Carrusel
+          <div className="relative">
+            {/* Carrusel Container */}
+            <div className="relative overflow-hidden rounded-2xl">
+              <div className="flex transition-transform duration-500 ease-in-out">
+                {getCarouselServices().map((service) => (
+                  <div key={service.id} className="w-full md:w-1/3 flex-shrink-0 px-4">
+                    <Card 
+                      className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white h-full"
+                    >
+                      <div className="relative h-64 overflow-hidden">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute top-4 right-4">
+                            <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                              <service.icon className="h-5 w-5 text-white" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="absolute top-4 left-4">
+                          <Badge className={`${service.badgeColor} border-0 text-white`}>
+                            {service.category}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <CardHeader className="pb-4">
+                        <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
+                          {service.title}
+                        </CardTitle>
+                        <CardDescription className="text-gray-600">
+                          {service.description}
+                        </CardDescription>
+                      </CardHeader>
+                      
+                      <CardContent className="pt-0">
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-2xl font-bold text-purple-600">{service.price}</span>
+                            <span className="text-sm text-gray-500">{service.duration}</span>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <div className="flex items-center text-sm text-gray-600">
+                              <Users className="h-4 w-4 mr-2 text-purple-500" />
+                              {service.capacity}
+                            </div>
+                            <div className="flex items-center text-sm text-gray-600">
+                              <Clock className="h-4 w-4 mr-2 text-purple-500" />
+                              {service.duration}
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <h4 className="font-semibold text-gray-800 text-sm">✨ Incluye:</h4>
+                            <ul className="space-y-1">
+                              {service.features.slice(0, 3).map((feature, idx) => (
+                                <li key={idx} className="flex items-center text-xs text-gray-600">
+                                  <div className="w-1.5 h-1.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-2 flex-shrink-0"></div>
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <Button
+                            onClick={() => setSelectedService(service)}
+                            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                          >
+                            <ArrowRight className="mr-2 h-4 w-4" />
+                            Ver Detalles
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Arrows */}
+            {totalSlides > 1 && (
+              <>
+                <Button
+                  onClick={prevSlide}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 shadow-lg rounded-full p-2 z-10"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+                <Button
+                  onClick={nextSlide}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 shadow-lg rounded-full p-2 z-10"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </>
+            )}
+
+            {/* Dots Navigation */}
+            {totalSlides > 1 && (
+              <div className="flex justify-center mt-6 space-x-2">
+                {Array.from({ length: totalSlides }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      currentSlide === index
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600'
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Ver Todos Button */}
+            <div className="text-center mt-8">
+              <Button
+                onClick={() => setShowAllServices(true)}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+              >
+                <Eye className="mr-2 h-5 w-5" />
+                Ver Todos los Servicios
+              </Button>
+            </div>
+          </div>
+        ) : (
+          // Modo Grid Completo
+          <div className="space-y-8">
+            <div className="flex justify-between items-center">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Todos los Servicios {activeFilter === "principales" ? "Principales" : "Adicionales"}
+              </h3>
+              <Button
+                onClick={() => setShowAllServices(false)}
+                variant="outline"
+                className="border-2 border-purple-200 text-purple-600 hover:bg-purple-50"
+              >
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Volver al Carrusel
+              </Button>
+            </div>
+
+            {/* Services Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredServices.map((service) => (
+                <Card 
+                  key={service.id}
+                  className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white"
+                >
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute top-4 right-4">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                          <service.icon className="h-5 w-5 text-white" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="absolute top-4 left-4">
+                      <Badge className={`${service.badgeColor} border-0 text-white`}>
+                        {service.category}
+                      </Badge>
                     </div>
                   </div>
-                </div>
-                <div className="absolute top-4 left-4">
-                  <Badge className={`${service.badgeColor} border-0 text-white`}>
-                    {service.category}
-                  </Badge>
-                </div>
-              </div>
-              
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
-                  {service.title}
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  {service.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent className="pt-0">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-purple-600">{service.price}</span>
-                    <span className="text-sm text-gray-500">{service.duration}</span>
-                  </div>
                   
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Users className="h-4 w-4 mr-2" />
-                    {service.capacity}
-                  </div>
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
+                      {service.title}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600">
+                      {service.description}
+                    </CardDescription>
+                  </CardHeader>
                   
-                  <div className="pt-2">
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 group-hover:bg-purple-600 group-hover:text-white transition-all"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setSelectedService(service)
-                      }}
-                    >
-                      Ver Detalles
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-2xl font-bold text-purple-600">{service.price}</span>
+                        <span className="text-sm text-gray-500">{service.duration}</span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Users className="h-4 w-4 mr-2 text-purple-500" />
+                          {service.capacity}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Clock className="h-4 w-4 mr-2 text-purple-500" />
+                          {service.duration}
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-gray-800 text-sm">✨ Incluye:</h4>
+                        <ul className="space-y-1">
+                          {service.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center text-xs text-gray-600">
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full mr-2 flex-shrink-0"></div>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <Button
+                        onClick={() => setSelectedService(service)}
+                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                      >
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        Ver Detalles
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Service Modal */}
         {selectedService && (
