@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Menu, X, Crown, Sparkles, PartyPopper, ChevronDown, Star, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -10,6 +10,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -26,10 +27,51 @@ export default function Navigation() {
     }
   }
 
+  const handleServiceNavigation = (targetId: string, filterType?: string) => {
+    console.log('Navegando a:', targetId, 'con filtro:', filterType) // Debug
+    
+    // Navegar a la sección
+    smoothScroll(targetId)
+    
+    // Si hay un filtro específico, activarlo después de un pequeño delay
+    if (filterType) {
+      setTimeout(() => {
+        console.log('Disparando evento para filtro:', filterType) // Debug
+        // Disparar un evento personalizado para activar el filtro
+        window.dispatchEvent(new CustomEvent('activateServiceFilter', {
+          detail: { filterType }
+        }))
+      }, 100) // Reducido de 500ms a 100ms para mayor velocidad
+    }
+  }
+
   const serviceLinks = [
-    { href: "#servicios", label: "🎉 Servicios Principales", icon: Star },
-    { href: "#servicios-grid", label: "⭐ Paquetes Especiales", icon: Gift },
+    { 
+      href: "#servicios-grid", 
+      label: "🎉 Servicios Principales", 
+      icon: Star,
+      filterType: "principales"
+    },
+    { 
+      href: "#servicios-grid", 
+      label: "⭐ Servicios Adicionales", 
+      icon: Gift,
+      filterType: "adicionales"
+    },
   ]
+
+  const handleServicesMouseEnter = () => {
+    if (servicesTimeoutRef.current) {
+      clearTimeout(servicesTimeoutRef.current)
+    }
+    setIsServicesOpen(true)
+  }
+
+  const handleServicesMouseLeave = () => {
+    servicesTimeoutRef.current = setTimeout(() => {
+      setIsServicesOpen(false)
+    }, 150) // 150ms delay antes de cerrar
+  }
 
   return (
     <nav
@@ -56,11 +98,14 @@ export default function Navigation() {
             {NAVIGATION_ITEMS.map((item) => {
               if (item.label === "Servicios") {
                 return (
-                  <div key={item.href} className="relative">
+                  <div 
+                    key={item.href} 
+                    className="relative"
+                    onMouseEnter={handleServicesMouseEnter}
+                    onMouseLeave={handleServicesMouseLeave}
+                  >
                     <button
                       className="flex items-center text-gray-700 hover:text-pink-600 transition-colors font-medium"
-                      onMouseEnter={() => setIsServicesOpen(true)}
-                      onMouseLeave={() => setIsServicesOpen(false)}
                     >
                       {item.label}
                       <ChevronDown className="ml-1 h-4 w-4" />
@@ -68,14 +113,12 @@ export default function Navigation() {
                     
                     {isServicesOpen && (
                       <div 
-                        className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-pink-100 py-2 z-50"
-                        onMouseEnter={() => setIsServicesOpen(true)}
-                        onMouseLeave={() => setIsServicesOpen(false)}
+                        className="absolute top-full left-0 mt-1 w-64 bg-white rounded-xl shadow-2xl border border-pink-100 py-2 z-50"
                       >
                         {serviceLinks.map((serviceLink) => (
                           <button
                             key={serviceLink.href}
-                            onClick={() => smoothScroll(serviceLink.href)}
+                            onClick={() => handleServiceNavigation(serviceLink.href, serviceLink.filterType)}
                             className="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
                           >
                             <serviceLink.icon className="h-5 w-5 mr-3" />
@@ -127,7 +170,7 @@ export default function Navigation() {
                     {serviceLinks.map((serviceLink) => (
                       <button
                         key={serviceLink.href}
-                        onClick={() => smoothScroll(serviceLink.href)}
+                        onClick={() => handleServiceNavigation(serviceLink.href, serviceLink.filterType)}
                         className="w-full flex items-center px-4 py-2 text-gray-700 hover:text-pink-600 font-medium"
                       >
                         <serviceLink.icon className="h-4 w-4 mr-3" />

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Star, Users, Clock, CheckCircle, X, ArrowRight, Building2, Palette, Volume2, Video, ChefHat, PartyPopper } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -214,6 +214,26 @@ const FILTER_OPTIONS = [
 export default function ServicesGridSection() {
   const [activeFilter, setActiveFilter] = useState<ServiceType>("principales")
   const [selectedService, setSelectedService] = useState<Service | null>(null)
+
+  // Escuchar eventos de activación de filtros desde la navegación
+  useEffect(() => {
+    const handleFilterActivation = (event: CustomEvent) => {
+      console.log('Evento recibido:', event.detail) // Debug
+      const { filterType } = event.detail
+      if (filterType === "principales" || filterType === "adicionales") {
+        console.log('Activando filtro:', filterType) // Debug
+        setActiveFilter(filterType as ServiceType)
+      }
+    }
+
+    // Agregar el event listener
+    window.addEventListener('activateServiceFilter', handleFilterActivation as EventListener)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('activateServiceFilter', handleFilterActivation as EventListener)
+    }
+  }, [])
 
   const filteredServices = allServices.filter((service) => service.type === activeFilter)
 
