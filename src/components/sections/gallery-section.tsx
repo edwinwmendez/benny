@@ -57,8 +57,7 @@ export default function GallerySection() {
           {filteredGallery.map((item, index) => (
             <div
               key={index}
-              className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 cursor-pointer"
-              onClick={() => setSelectedImage(item)}
+              className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105"
             >
               <Image
                 src={item.image || "/placeholder.svg"}
@@ -77,9 +76,15 @@ export default function GallerySection() {
                   <p className="text-sm text-gray-200">{item.description}</p>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                  <button
+                    className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setSelectedImage(item)
+                    }}
+                  >
                     <Camera className="h-5 w-5 text-white" />
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -89,7 +94,7 @@ export default function GallerySection() {
         {/* Image Modal */}
         {selectedImage && (
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <div className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl">

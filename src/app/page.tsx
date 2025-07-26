@@ -3,7 +3,7 @@
 import Navigation from "@/components/sections/navigation"
 import HeroSection from "@/components/sections/hero-section"
 import ServicesGridSection from "@/components/sections/services-grid-section"
-import DetailedServicesSection from "@/components/sections/detailed-services-section"
+// import DetailedServicesSection from "@/components/sections/detailed-services-section"
 import GallerySection from "@/components/sections/gallery-section"
 import TestimonialsSection from "@/components/sections/testimonials-section"
 import ContactSection from "@/components/sections/contact-section"
@@ -21,7 +21,7 @@ export default function ProduccionesBenny() {
       <main>
         <HeroSection />
         <ServicesGridSection />
-        <DetailedServicesSection />
+        {/* <DetailedServicesSection /> */}
         <GallerySection />
         <TestimonialsSection />
         <ContactSection />

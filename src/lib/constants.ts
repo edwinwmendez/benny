@@ -27,6 +27,7 @@ export const FILTER_OPTIONS = [
 export const NAVIGATION_ITEMS = [
   { href: "#inicio", label: "Inicio" },
   { href: "#servicios", label: "Servicios" },
+  { href: "#servicios-grid", label: "Paquetes" },
   { href: "#galeria", label: "Galería" },
   { href: "#contacto", label: "Contacto" },
 ] as const

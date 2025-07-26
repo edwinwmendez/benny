@@ -260,8 +260,7 @@ export default function ServicesGridSection() {
           {filteredServices.map((service) => (
             <Card 
               key={service.id}
-              className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 cursor-pointer border-0 bg-white"
-              onClick={() => setSelectedService(service)}
+              className="relative group overflow-hidden rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 border-0 bg-white"
             >
               <div className="relative h-64 overflow-hidden">
                 <Image
@@ -309,6 +308,10 @@ export default function ServicesGridSection() {
                     <Button 
                       variant="outline" 
                       className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 group-hover:bg-purple-600 group-hover:text-white transition-all"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSelectedService(service)
+                      }}
                     >
                       Ver Detalles
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -323,7 +326,7 @@ export default function ServicesGridSection() {
         {/* Service Modal */}
         {selectedService && (
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
             onClick={() => setSelectedService(null)}
           >
             <div className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl">
