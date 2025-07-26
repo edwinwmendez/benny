@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/.pnp
+.pnp.js
 
 # next.js
 /.next/
@@ -9,6 +11,7 @@
 
 # production
 /build
+/dist
 
 # debug
 npm-debug.log*
@@ -16,8 +19,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files (CRÍTICO: Nunca subir archivos de entorno)
 .env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -25,6 +32,66 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.DS_Store
 
+# Sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+
+# Carpetas temporales
+tmp/
+temp/
+
+# Archivos de configuración sensibles
+config.json
+secrets.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Claude AI (carpeta de trabajo)
+.claude/
 .claude
+
+# Copias de seguridad
+*.backup
+*.bak
+*.tmp
+
+# Archivos de certificados y llaves
+*.crt
+*.csr
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Base de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos comprimidos locales
+*.zip
+*.tar.gz
+*.rar
+
+# Archivos de caché
+.cache/
+.parcel-cache/
