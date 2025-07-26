@@ -96,19 +96,19 @@ export default function ContactSection() {
         </div>
 
         {/* Contenido principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Sidebar informativo - Lado izquierdo */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Métodos de contacto compactos */}
             <Card className="bg-white border-0 shadow-lg">
               <CardContent className="p-4">
-                <h4 className="font-bold text-gray-800 mb-3 text-center">Métodos de Contacto</h4>
+                <h4 className="font-bold text-gray-800 mb-2 text-center">Métodos de Contacto</h4>
                 <div className="space-y-3">
                   {contactMethods.map((method, index) => (
                     <div 
                       key={index}
-                      className={`${method.bgColor} rounded-lg p-3 cursor-pointer group transition-all duration-300 hover:scale-105`}
+                      className={`${method.bgColor} rounded-lg p-2 cursor-pointer group transition-all duration-300 hover:scale-105`}
                       onClick={method.action}
                     >
                       <div className="flex items-center space-x-3">
@@ -133,7 +133,7 @@ export default function ContactSection() {
 
             {/* Horarios */}
             <Card className="bg-gradient-to-br from-yellow-50 to-orange-100 border-0 shadow-lg">
-              <CardContent className="p-6">
+              <CardContent className="p-4">
                 <div className="flex items-center mb-4">
                   <Clock className="h-6 w-6 text-orange-500 mr-2" />
                   <h4 className="font-bold text-gray-800">Horarios de Atención</h4>
@@ -158,7 +158,7 @@ export default function ContactSection() {
             {/* Garantía */}
             <Card className="bg-gradient-to-br from-green-50 to-emerald-100 border-0 shadow-lg">
               <CardContent className="p-6 text-center">
-                <div className="text-3xl mb-3">🛡️</div>
+                <div className="text-3xl">🛡️</div>
                 <h4 className="font-bold text-gray-800 mb-2">Garantía Total</h4>
                 <p className="text-sm text-gray-600">
                   {RESPONSE_TIME} o tu consulta es gratis

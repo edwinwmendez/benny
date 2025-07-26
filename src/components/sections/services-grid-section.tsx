@@ -223,7 +223,8 @@ export default function ServicesGridSection() {
       const { filterType } = event.detail
       if (filterType === "principales" || filterType === "adicionales") {
         setActiveFilter(filterType as ServiceType)
-        setShowAllServices(true) // Mostrar todos los servicios cuando se navega desde el menú
+        setCurrentSlide(0) // Resetear al primer slide
+        setShowAllServices(false) // Mantener en modo carrusel
       }
     }
 

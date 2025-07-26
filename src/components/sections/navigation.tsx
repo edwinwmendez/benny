@@ -21,7 +21,14 @@ export default function Navigation() {
   const smoothScroll = (targetId: string) => {
     const element = document.querySelector(targetId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      const headerHeight = 80 // Altura aproximada del header fijo
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - headerHeight
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
       setIsMenuOpen(false)
       setIsServicesOpen(false)
     }
