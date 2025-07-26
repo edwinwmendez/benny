@@ -25,6 +25,24 @@ export default function ProduccionesBenny() {
         <GallerySection />
         <TestimonialsSection />
         <ContactSection />
+        
+        {/* Footer básico para demostración */}
+        <footer className="bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 text-white py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-2">Producciones Benny</h3>
+              <p className="text-purple-200 mb-4">Convirtiendo sueños en celebraciones inolvidables ✨</p>
+              <div className="flex justify-center space-x-6 text-purple-300">
+                <span>📞 +51 999 999 999</span>
+                <span>📧 contacto@produccionesbenny.com</span>
+                <span>📍 Av. El Sol 527, S.J.L</span>
+              </div>
+              <div className="mt-4 pt-4 border-t border-purple-700">
+                <p className="text-sm text-purple-300">&copy; 2024 Producciones Benny. Todos los derechos reservados.</p>
+              </div>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   )
